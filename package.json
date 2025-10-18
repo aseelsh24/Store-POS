@@ -6,21 +6,32 @@
   "private": true,
   "main": "start.js",
   "build": {
-    "appId": "01",
+    "appId": "com.aseelsh.storepos",
+    "productName": "Store POS",
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "msi"
+      ],
+      "artifactName": "StorePOS-${version}.msi"
     }
   },
   "dependencies": {
     "async": "^2.6.4",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.18.2",
-    "btoa": "^1.2.1",
+    "dotenv": "^16.4.5",
     "electron": ">=22.3.25",
     "electron-context-menu": "^0.15.1",
     "electron-store": "^5.1.0",
     "electron-winstaller": "^4.0.0",
     "express": "^4.19.2",
     "express-fileupload": "^1.1.6",
+    "express-rate-limit": "^7.4.2",
+    "helmet": "^8.0.0",
     "html2canvas": "^1.0.0-rc.5",
     "http": "0.0.0",
     "https": "^1.0.0",
@@ -28,21 +39,36 @@
     "jquery": "^3.4.1",
     "jsbarcode": "^3.11.0",
     "jspdf": "^2.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
     "macaddress": "^0.2.9",
     "moment": "^2.29.4",
-    "multer": "^1.4.2",
-    "nedb": "^1.8.0",
-    "nodemon": "^1.14.12",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.5",
+    "nodemon": "^3.1.9",
     "path": "^0.12.7",
+    "pg": "^8.13.1",
     "print-js": "^1.0.63",
-    "socket.io": "^2.4.0",
-    "sweetalert2": "^9.5.4",
-    "xmlhttprequest": "^1.8.0"
+    "socket.io": "^2.5.1",
+    "sqlite3": "^5.1.7",
+    "sweetalert2": "^11.14.5",
+    "xmlhttprequest": "^1.8.0",
+    "zod": "^3.24.1"
   },
   "scripts": {
     "electron": "cross-env NODE_ENV=dev nodemon --exec \"\"electron .\"\"",
     "electron-build": "electron-builder",
-    "package-win": "electron-packager . POS --overwrite --asar=false --platform=win32 --arch=x64 --icon=assets/images/icon.ico --prune=true --out=release-builds --version-string.ProductName=\"POS\""
+    "package-win": "electron-packager . POS --overwrite --asar=false --platform=win32 --arch=x64 --icon=assets/images/icon.ico --prune=true --out=release-builds --version-string.ProductName=\"POS\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:migrate": "knex migrate:latest",
+    "db:rollback": "knex migrate:rollback",
+    "db:seed": "knex seed:run",
+    "dist:win": "electron-builder --win msi",
+    "test": "jest",
+    "build": "echo 'Build step placeholder'"
   },
   "browserslist": {
     "production": [
@@ -57,9 +83,15 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^6.0.3",
-    "electron-builder": "^21.2.0",
-    "electron-is-dev": "^1.1.0",
-    "nodemon": "^1.19.3"
+    "@eslint/js": "^9.17.0",
+    "cross-env": "^7.0.3",
+    "electron-builder": "^25.1.8",
+    "electron-is-dev": "^3.0.1",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
   }
 }
